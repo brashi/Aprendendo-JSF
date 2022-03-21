@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Lista de tarefas</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h3>Estou a fazer...</h3>
+
+		<h:panelGrid>
+		
+			<h:inputText id="Titulo" value="#{bean.todoTitulo}" size="30"/>
+			<h:inputTextarea id="Descrição" value="#{bean.todoDesc}"
+					rows="2" cols="50"/>
+		 	
+		 	<h3>Escolha a prioridade da tarefa </h3>  
+         		<h:selectOneListbox value = "#{bean.todoPrioridade}"> 
+            		<f:selectItem itemValue = "1" itemLabel = "Alta" /> 
+            		<f:selectItem itemValue = "2" itemLabel = "Média" /> 
+            		<f:selectItem itemValue = "3" itemLabel = "Baixa" />      
+         		</h:selectOneListbox>
+         		
+         <h:commandButton value = "Enviar" action = "Resultados" /> 
+			<h:selectOneListbox id="Lista" size="10" value="#{bean.todo}">
+				<f:selectItems value="#{bean.todoDao.getList()}"/>
+				<f:ajax execute="@this" render="msg name desc" />
+								
+				<f:attribute name="beanattr" value="#{bean}"/>
+			</h:selectOneListbox>
+			
+		</h:panelGrid>
+		<h:panelGrid columns="5">
+			<h:commandButton value="Adicionar tarefa" actionListener="#{bean.newListener}"/>
+			<h:commandButton value="Editar tarefa" actionListener="#{bean.editListener}"/>
+			<h:commandButton value="Salvar" actionListener="#{bean.saveListener}"/>
+			<h:commandButton value="Deletar" actionListener="#{bean.deleteListener}"/>
+			<h:commandButton value="Cancelar" actionListener="#{bean.cancelListener}"/>
+		</h:panelGrid>
+		<br /><h:outputText id="msg" value="#{bean.message}" />
+		 
+	</h:form>
+</h:body>
+</html>
